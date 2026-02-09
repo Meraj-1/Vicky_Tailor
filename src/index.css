@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+
+
+
+.pre_text {
+      font-family: "Monoton";
+  font-weight: 550;
+  font-style: normal;
+}
+
+
 body {
   @apply bg-white text-black font-serif;
 }
