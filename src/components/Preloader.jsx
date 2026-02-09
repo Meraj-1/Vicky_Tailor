@@ -19,16 +19,16 @@ export default function Preloader() {
       />
 
       {/* CENTER CONTENT */}
-      <div className="relative z-10 text-center px-6">
+      <div className="relative z-10 text-center ">
 
         {/* LOGO */}
         <motion.img
           src="/icon.png"
           alt="Vicky Tailor Logo"
           className="
-            mx-auto mb-8
-            w-28 h-28
-            sm:w-36 sm:h-36
+            mx-auto 
+            w-50 h-50
+            sm:w-55 sm:h-55
             lg:w-44 lg:h-44
             xl:w-52 xl:h-52
           "
