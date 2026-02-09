@@ -2,60 +2,75 @@ import { motion } from "framer-motion";
 
 export default function Preloader() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
-      <div className="flex flex-col items-center text-center scale-110">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white overflow-hidden">
 
-        {/* Logo Animation (BIGGER) */}
+      {/* DOT BACKGROUND */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.25 }}
+        transition={{ duration: 1 }}
+        style={{
+          backgroundImage:
+            "radial-gradient(#5A0E24 0.8px, transparent 0.8px)",
+          backgroundSize: "14px 14px",
+        }}
+      />
+
+      {/* CENTER CONTENT */}
+      <div className="relative z-10 text-center">
+
+        {/* Logo */}
         <motion.img
-          src="/icon.jpg"
+          src="/icon.png"
           alt="Vicky Tailor Logo"
-          className="w-44 h-44 object-contain mb-10"
-          initial={{ opacity: 0, scale: 0.5, rotate: -12 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-          }}
+          className="w-44 h-44 mx-auto mb-8"
+          initial={{ scale: 0.85, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{
-            duration: 1.4,
+            duration: 1,
             ease: "easeOut",
           }}
         />
 
-        {/* Brand Name (BIGGER) */}
+        {/* Brand Name */}
         <motion.h1
-          className="text-6xl md:text-7xl font-bold tracking-wider text-[#5A0E24]"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
+          className="text-6xl md:text-7xl font-bold text-[#5A0E24]"
+          initial={{ y: 25, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            delay: 0.4,
+            duration: 0.9,
+            ease: "easeOut",
+          }}
         >
           Vicky Tailor
         </motion.h1>
 
         {/* Since */}
         <motion.p
-          className="mt-3 text-base tracking-[0.3em] text-[#D4AF37]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
+          className="mt-3 tracking-[0.35em] text-[#D4AF37]"
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            delay: 0.7,
+            duration: 0.7,
+            ease: "easeOut",
+          }}
         >
           SINCE 1983
         </motion.p>
 
-        {/* Divider Line */}
-        <motion.div
-          className="w-24 h-[2px] bg-[#D4AF37] mt-6"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-        />
-
         {/* Tagline */}
         <motion.p
-          className="mt-6 italic text-lg md:text-xl text-gray-500"
+          className="mt-6 italic text-gray-500"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
+          transition={{
+            delay: 1,
+            duration: 0.8,
+            ease: "easeOut",
+          }}
         >
           Crafting Perfection…
         </motion.p>
