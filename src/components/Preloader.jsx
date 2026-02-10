@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const BRAND_NAME = "Vicky Tailor";
+const BRAND_NAME = `Vicky Tailor`;
 
 export default function Preloader() {
   return (
@@ -42,16 +42,16 @@ export default function Preloader() {
 <motion.div
   className="relative mb-8"
   style={{ transformOrigin: "50% 0%" }}
-  initial={{ rotate: -10 }}
-  animate={{ rotate: [-10, 10, -7, 7, -3, 3, 0] }}
+  initial={{ rotate: -40 }}
+  animate={{ rotate: [-40, 40, -30, 30, -20, 20, -10, 10, 0] }}
   transition={{
-    duration: 3.2,
+    duration: 3,
     ease: "easeOut",
   }}
 >
 
   {/* THREAD / STRING */}
-  <div
+  {/* <div
     className="
       absolute
       left-1/2 -translate-x-1/2
@@ -60,7 +60,7 @@ export default function Preloader() {
       w-[2px]
       bg-[#5A0E24]/60
     "
-  />
+  /> */}
 
   {/* LOGO IMAGE */}
   <motion.img
