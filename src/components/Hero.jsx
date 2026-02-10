@@ -1,157 +1,152 @@
 "use client";
 
-// Yahan maine useMotionValue aur useScroll ko add kar diya hai
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState } from "react";
 
-// --- BOUTIQUE IMAGE COMPONENT ---
-const BoutiqueImage = ({ src, className, delay = 0 }) => {
+// --- MINIMALIST PERSPECTIVE COMPONENT ---
+const AestheticImage = ({ src, className, delay = 0 }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
   const mouseX = useSpring(x, { stiffness: 100, damping: 20 });
   const mouseY = useSpring(y, { stiffness: 100, damping: 20 });
 
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["8deg", "-8deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-8deg", "8deg"]);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 1.5, delay, ease: [0.16, 1, 0.3, 1] }}
-      onMouseMove={handleMouseMove}
+      transition={{ duration: 1.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        x.set((e.clientX - rect.left) / rect.width - 0.5);
+        y.set((e.clientY - rect.top) / rect.height - 0.5);
+      }}
       onMouseLeave={() => { x.set(0); y.set(0); }}
       style={{ rotateX, rotateY, perspective: 1000 }}
       className={className}
     >
-      <div className="relative w-full h-full p-[10px] bg-white/5 backdrop-blur-sm border border-white/10 rounded-sm overflow-hidden group shadow-2xl">
+      <div className="relative w-full h-full overflow-hidden shadow-[20px_40px_80px_rgba(0,0,0,0.06)] border border-white/50">
         <motion.img
           src={src}
-          className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-[1.5s]"
+          className="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-[2s]"
         />
-        <div className="absolute inset-0 bg-[#050B14]/40 group-hover:bg-transparent transition-colors duration-700" />
+        {/* Soft Sunlight Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
       </div>
     </motion.div>
   );
 };
 
-export default function RoyalHero() {
+export default function AestheticLightHero() {
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef(null);
-
-  // Scroll animations for background depth
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
 
   return (
-    <section 
-      ref={containerRef}
-      className="relative min-h-screen bg-[#050B14] text-[#E2D1B3] overflow-hidden selection:bg-[#B17457]/30"
-    >
-      {/* 1. BACKGROUND DECOR */}
-      <div className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vh] bg-[#B17457]/10 blur-[150px] rounded-full pointer-events-none" />
+    <section className="relative min-h-screen bg-[#F9F7F2] text-[#2D2D2D] overflow-hidden selection:bg-[#D4AF37]/20">
       
-      <div className="absolute left-12 top-1/2 -translate-y-1/2 overflow-hidden h-40 hidden lg:block pointer-events-none">
-        <motion.span 
-          style={{ y: textY }}
-          className="text-[150px] font-serif font-black text-white/[0.02] leading-none block"
-        >
-          1983
-        </motion.span>
+      {/* 1. ARCHITECTURAL LAYOUT ELEMENTS */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Soft Stone Shape */}
+        <div className="absolute top-0 right-0 w-[45vw] h-full bg-[#F0EEE6]" />
+        
+        {/* Subtle Grid Texture */}
+        <div className="absolute inset-0 opacity-[0.4] bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] mix-blend-multiply" />
+        
+        {/* Large Faded Signature */}
+        <div className="absolute top-1/2 left-10 -translate-y-1/2 -rotate-90 origin-left">
+           <span className="text-[12rem] font-serif italic text-black/[0.02] whitespace-nowrap">
+             Handmade Legacy
+           </span>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-[1500px] mx-auto px-8 grid lg:grid-cols-12 gap-12 min-h-screen items-center py-24">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 grid lg:grid-cols-12 gap-4 min-h-screen items-center py-20">
         
-        {/* LEFT – VISUALS */}
-        <div className="lg:col-span-7 relative h-[80vh] flex items-center justify-center">
-          <BoutiqueImage 
-            src="/photo/hero1.jpg" 
-            className="z-20 w-[60%] h-[75%] shadow-[50px_50px_100px_rgba(0,0,0,0.6)]"
-            delay={0.2}
-          />
-          <BoutiqueImage 
-            src="/photo/hero2.jpg" 
-            className="absolute top-[5%] right-[2%] z-10 w-[42%] h-[45%]"
-            delay={0.5}
-          />
-          <BoutiqueImage 
-            src="/photo/hero4.jpg" 
-            className="absolute bottom-[5%] left-[0%] z-30 w-[38%] h-[35%] border-[10px] border-[#050B14]"
-            delay={0.8}
-          />
-        </div>
-
-        {/* RIGHT – CONTENT */}
-        <div className="lg:col-span-5 lg:pl-10">
+        {/* LEFT – CONTENT (6 Columns) */}
+        <div className="lg:col-span-6 lg:pr-16 order-2 lg:order-1">
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
+            {/* Elegant Sub-header */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-[1px] bg-[#B17457]" />
-              <span className="text-[10px] tracking-[0.6em] uppercase text-[#B17457] font-bold">
-                Royal Bespoke Service
+              <span className="text-[10px] tracking-[0.6em] uppercase text-[#D4AF37] font-bold">
+                The New Standard
               </span>
+              <div className="h-[1px] w-16 bg-[#D4AF37]/30" />
             </div>
 
-            <h1 className="text-7xl md:text-[8rem] font-serif leading-[0.85] tracking-tighter text-white mb-10">
-              Unerring <br />
-              <span className="italic font-light text-[#E2D1B3]/50">Precision</span>
+            {/* Refined Headline */}
+            <h1 className="text-7xl md:text-[8.5rem] font-serif leading-[0.9] tracking-tight mb-12 text-[#1A1A1A]">
+              Timeless <br />
+              <span className="italic font-light text-[#A89276]">Elegance</span>
             </h1>
 
-            <div className="max-w-sm">
-              <p className="text-[#94A3B8] font-light leading-relaxed text-lg mb-12 border-l-2 border-[#B17457]/20 pl-6">
-                Tailoring is a silent conversation between the fabric and the form. We listen.
+            <div className="max-w-md">
+              <p className="text-neutral-500 font-light leading-relaxed text-lg mb-12">
+                We believe in the beauty of the <span className="text-black italic">unspoken</span>. No loud logos, just perfect cuts and the world's finest natural fibers.
               </p>
 
-              <div className="flex items-center gap-10">
+              {/* MINIMALIST BUTTON */}
+              <div className="flex items-center gap-12">
                 <motion.button
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
-                  className="relative group h-16 w-16 rounded-full border border-[#B17457] flex items-center justify-center transition-all duration-700 overflow-hidden hover:w-60"
+                  className="relative px-10 py-5 bg-[#1A1A1A] text-white text-[11px] tracking-[0.4em] uppercase overflow-hidden"
                 >
-                  <div className="absolute left-5 text-[#B17457] group-hover:text-white transition-colors">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </div>
-                  <span className="ml-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-[10px] tracking-[0.4em] uppercase whitespace-nowrap text-white font-bold">
-                    Secure Appointment
-                  </span>
+                  <motion.div 
+                    animate={{ x: isHovered ? "100%" : "-100%" }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute inset-0 bg-[#D4AF37] opacity-20"
+                  />
+                  <span className="relative z-10">Start the Fit</span>
                 </motion.button>
-                
-                <span className="text-[9px] tracking-widest uppercase text-white/20 hidden md:block">
-                  London • Dubai • Delhi
-                </span>
-              </div>
-            </div>
 
-            <div className="mt-20 grid grid-cols-2 gap-8 border-t border-white/5 pt-12">
-               <div>
-                  <p className="text-[10px] tracking-widest uppercase text-[#B17457] mb-2">Heritage</p>
-                  <p className="text-sm text-white/40 font-serif italic">Est. 1983</p>
-               </div>
-               <div>
-                  <p className="text-[10px] tracking-widest uppercase text-[#B17457] mb-2">Technique</p>
-                  <p className="text-sm text-white/40 font-serif italic">Full Floating Canvas</p>
-               </div>
+                <div className="h-20 w-[1px] bg-black/10 hidden md:block" />
+                
+                <div className="hidden md:block">
+                  <p className="text-[9px] tracking-widest uppercase text-black/40">Next Opening</p>
+                  <p className="text-[12px] font-medium text-[#A89276]">Savile Row, March '26</p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
+
+        {/* RIGHT – VISUAL COMPOSITION (6 Columns) */}
+        <div className="lg:col-span-6 relative h-[75vh] flex items-center justify-end order-1 lg:order-2">
+           {/* Primary Minimal Image */}
+           <AestheticImage 
+             src="/photo/hero1.jpg" 
+             className="z-20 w-[75%] h-[85%] rounded-[4px]"
+             delay={0.2}
+           />
+
+           {/* Detail Inset */}
+           <AestheticImage 
+             src="/photo/hero2.jpg" 
+             className="absolute -left-10 bottom-[10%] z-30 w-[45%] h-[40%] border-[15px] border-[#F9F7F2]"
+             delay={0.5}
+           />
+           
+           {/* Floating Badge */}
+           <div className="absolute top-[10%] -left-5 z-40 bg-white p-4 shadow-sm border border-black/5 rotate-3">
+              <p className="text-[9px] font-black tracking-widest uppercase">100% Cashmere</p>
+           </div>
+        </div>
       </div>
+
+      {/* MINIMAL FOOTER OVERLAY */}
+      <div className="absolute bottom-10 left-10 flex gap-20 opacity-40 grayscale pointer-events-none">
+         <span className="text-[10px] tracking-widest uppercase">Milan</span>
+         <span className="text-[10px] tracking-widest uppercase">Paris</span>
+         <span className="text-[10px] tracking-widest uppercase">London</span>
+      </div>
+
     </section>
   );
 }
