@@ -1,117 +1,179 @@
-import { motion } from "framer-motion";
+"use client";
+
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+
+// --- HOVER 3D EFFECT COMPONENT ---
+const PerspectiveImage = ({ src, className, delay = 0 }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
+  const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
+
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseXRelative = (e.clientX - rect.left) / width - 0.5;
+    const mouseYRelative = (e.clientY - rect.top) / height - 0.5;
+    x.set(mouseXRelative);
+    y.set(mouseYRelative);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9, y: 50 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 1.5, delay, ease: [0.16, 1, 0.3, 1] }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, perspective: 1000 }}
+      className={className}
+    >
+      <div className="relative w-full h-full overflow-hidden rounded-sm ring-1 ring-white/10 group">
+        <motion.img
+          src={src}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
+    </motion.div>
+  );
+};
 
 export default function Hero() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <section className="relative min-h-screen bg-[#0b0b0b] text-white overflow-hidden">
+    <section className="relative min-h-screen bg-[#F0EEEA] text-[#1a1a1a] overflow-hidden selection:bg-[#C5A03A]/30">
+      
+      {/* 1. ARCHITECTURAL BACKGROUND */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[60vw] h-screen bg-[#E8E5E0] skew-x-[-12deg] translate-x-[20%]" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]" />
+      </div>
 
-      {/* CINEMATIC BACKGROUND */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#1c1c1c,black)]" />
-      <div className="absolute inset-0 shadow-[inset_0_0_200px_rgba(0,0,0,0.95)]" />
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 grid lg:grid-cols-12 gap-4 min-h-screen items-center py-20">
+        
+        {/* LEFT – VISUAL COMPOSITION (5 Columns) */}
+        <div className="lg:col-span-6 relative h-[70vh] flex items-center justify-center">
+          
+          {/* Main Portrait */}
+          <PerspectiveImage 
+            src="/photo/hero1.jpg" 
+            className="z-20 w-[65%] h-[75%] shadow-[40px_60px_100px_rgba(0,0,0,0.2)]"
+            delay={0.2}
+          />
 
-      {/* GOLD AMBIENT */}
-      <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-[#D4AF37]/10 blur-[150px]" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-[#D4AF37]/5 blur-[180px]" />
+          {/* Secondary Detail - Offset */}
+          <PerspectiveImage 
+            src="/photo/hero2.jpg" 
+            className="absolute top-[10%] right-[5%] z-10 w-[40%] h-[40%] shadow-xl"
+            delay={0.5}
+          />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-28 grid lg:grid-cols-2 gap-24 items-center">
+          {/* Fabric Texture - Foreground */}
+          <PerspectiveImage 
+            src="/photo/hero4.jpg" 
+            className="absolute bottom-[5%] left-0 z-30 w-[35%] h-[30%] shadow-2xl border-[12px] border-[#F0EEEA]"
+            delay={0.8}
+          />
 
-        {/* LEFT – CRAFT STORY (3 IMAGES) */}
-      <div className="relative h-[80vh] w-full">
-
-  {/* IMAGE 1 – LEFT */}
-  <motion.img
-    src="/photo/hero1.jpg"
-    className="
-      absolute top-0 left-0
-      w-[58%] h-[45%]
-      object-cover
-      rounded-xl
-      border border-white/10
-      shadow-[0_40px_80px_rgba(0,0,0,0.7)]
-    "
-    initial={{ opacity: 0, x: -80 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 1.2 }}
-  />
-
-  {/* IMAGE 2 – RIGHT */}
-  <motion.img
-    src="/photo/hero2.jpg"
-    className="
-      absolute top-[30%] right-0
-      w-[45%] h-[38%]
-      object-cover
-      rounded-xl
-      border border-white/10
-      shadow-[0_30px_60px_rgba(0,0,0,0.8)]
-    "
-    initial={{ opacity: 0, x: 80 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ delay: 0.2, duration: 1.2 }}
-  />
-
-  {/* IMAGE 3 – LEFT BOTTOM */}
-  <motion.img
-    src="/photo/hero4.jpg"
-    className="
-      absolute bottom-0 left-[8%]
-      w-[50%] h-[42%]
-      object-cover
-      rounded-xl
-      border border-white/10
-      shadow-[0_40px_80px_rgba(0,0,0,0.85)]
-    "
-    initial={{ opacity: 0, x: -80 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ delay: 0.4, duration: 1.2 }}
-  />
-
-  {/* SOFT CINEMATIC OVERLAY */}
-  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/60 pointer-events-none" />
-</div>
-
-        {/* RIGHT – BRAND ESSENCE */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <span className="text-[10px] tracking-[0.6em] uppercase text-white/40">
-            Handcrafted Since 1983
-          </span>
-
-          <h1 className="mt-8 text-5xl md:text-7xl xl:text-8xl font-serif font-light leading-[1.05]">
-            Tailoring
-            <br />
-            <span className="italic text-white/55">That Outlives Trends</span>
-          </h1>
-
-          <p className="mt-8 max-w-md text-white/45 leading-relaxed">
-            From carefully selected fabrics to precise hand finishing,  
-            every garment is shaped slowly — with intention, patience, and pride.
-          </p>
-
-          {/* MICRO DETAILS */}
-          <div className="mt-10 flex gap-8 text-[11px] tracking-widest uppercase text-white/35">
-            <span>• Bespoke Only</span>
-            <span>• Hand Cut</span>
-            <span>• Timeless Fit</span>
-          </div>
-
-          <div className="mt-14 flex items-center gap-6">
-            <button
-              className="px-10 py-3 border border-white/20
-              text-[11px] tracking-[0.35em] uppercase
-              hover:bg-white hover:text-black
-              transition-all duration-300"
-            >
-              Visit Workshop
-            </button>
-
-            <span className="text-[10px] tracking-widest uppercase text-white/30">
-              Limited Appointments
+          {/* Floating Text Decorative */}
+          <motion.div 
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -left-10 top-1/4 -rotate-90 origin-center hidden xl:block"
+          >
+            <span className="text-[10px] tracking-[1em] uppercase text-black/20 font-bold italic">
+              Legacy of the needle
             </span>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
+
+        {/* RIGHT – CONTENT (7 Columns) */}
+        <div className="lg:col-span-6 lg:pl-16">
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Elegant Subtitle */}
+            <div className="inline-flex items-center gap-6 mb-10">
+              <span className="text-[11px] tracking-[0.6em] uppercase text-[#9C7A1C] font-bold">
+                The Master's Atelier
+              </span>
+              <div className="h-px w-20 bg-[#9C7A1C]/20" />
+            </div>
+
+            {/* Main Headline with Split Text Effect */}
+            <h1 className="text-7xl md:text-[9rem] font-serif leading-[0.85] tracking-tighter text-[#1a1a1a]">
+              Quiet <br />
+              <span className="relative inline-block italic font-light text-[#9C7A1C]">
+                Luxury
+                <motion.div 
+                   initial={{ width: 0 }}
+                   animate={{ width: "110%" }}
+                   transition={{ delay: 1, duration: 1.5 }}
+                   className="absolute -bottom-2 left-[-5%] h-1 bg-[#D4AF37]/30"
+                />
+              </span>
+            </h1>
+
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12">
+              <p className="text-neutral-500 font-light leading-relaxed text-lg border-l-2 border-neutral-100 pl-8">
+                Every stitch is a signature. Every cut, a story. We don't just make suits; we engineer 
+                <span className="text-black font-medium italic"> presence.</span>
+              </p>
+              
+              <div className="flex flex-col justify-end gap-6">
+                 {/* Visit Workshop Button - High Interaction */}
+                 <motion.button
+                   onMouseEnter={() => setIsHovered(true)}
+                   onMouseLeave={() => setIsHovered(false)}
+                   className="group relative h-16 w-full bg-[#1a1a1a] text-white overflow-hidden rounded-full transition-all"
+                 >
+                   <motion.div 
+                     animate={{ y: isHovered ? "-100%" : "0%" }}
+                     className="absolute inset-0 flex items-center justify-center text-[10px] tracking-[0.5em] uppercase"
+                   >
+                     The Experience
+                   </motion.div>
+                   <motion.div 
+                     animate={{ y: isHovered ? "0%" : "100%" }}
+                     className="absolute inset-0 flex items-center justify-center bg-[#C5A03A] text-black text-[10px] tracking-[0.5em] uppercase font-bold"
+                   >
+                     Book Appointment
+                   </motion.div>
+                 </motion.button>
+              </div>
+            </div>
+
+            {/* Minimal Footer Credits */}
+            <div className="mt-20 flex items-center gap-10 opacity-30 text-[9px] tracking-[0.4em] uppercase font-black">
+              <span>Bespoke 1/1</span>
+              <span className="w-1 h-1 bg-black rounded-full" />
+              <span>Full Canvas</span>
+              <span className="w-1 h-1 bg-black rounded-full" />
+              <span>Worldwide</span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* BACKGROUND GRAPHIC */}
+      <div className="absolute bottom-10 right-10 flex flex-col items-end opacity-10 pointer-events-none">
+         <span className="text-9xl font-serif leading-none italic">1983</span>
+         <span className="text-xs tracking-[1em] uppercase -mt-4">Established</span>
       </div>
     </section>
   );
