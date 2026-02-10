@@ -27,21 +27,21 @@ const SERVICES_DATA = [
     slug: "classic-tuxedo",
     title: "Midnight Tuxedo",
     fullDescription: "Exquisite evening wear featuring silk-satin lapels and a razor-sharp cut, designed for the most prestigious black-tie occasions.",
-    videoUrl: "/reels/reel1.mp4", 
+    videoUrl: "/reels/reel2.mp4", 
     imageUrl: "/photo/service2.jpg",
   },
   {
     slug: "regal-wedding-wear",
     title: "Heritage Wedding",
     fullDescription: "Celebrate your legacy with ornate craftsmanship. A perfect blend of traditional hand-embroidery and modern regal aesthetics.",
-    videoUrl: "/reels/reel1.mp4",
+    videoUrl: "/reels/reel3.mp4",
     imageUrl: "/photo/service3.jpg",
   },
   {
     slug: "italian-blazer",
     title: "Italian Silk Blazer",
     fullDescription: "Lightweight, breathable, and undeniably sophisticated. Our unstructured blazers offer a relaxed yet refined Mediterranean flair.",
-    videoUrl: "/reels/reel1.mp4",
+    videoUrl: "/reels/reel4.mp4",
     imageUrl: "/photo/service4.jpg",
   }
 ];
