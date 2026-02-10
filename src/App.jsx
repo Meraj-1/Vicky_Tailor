@@ -5,7 +5,7 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
 import Collections from "./components/Collections";
-import Process from "./components/Process";
+// import Process from "./components/Process";
 import WhyChooseUs from "./components/WhyChooseUs";
 import Testimonials from "./components/Testimonials";
 import CTA from "./components/CTA";
@@ -42,18 +42,18 @@ export default function App() {
           <section id="collections">
             <Collections />
           </section>
-
+{/* 
           <section id="process">
             <Process />
-          </section>
+          </section> */}
 
           <section id="whychooseus">
             <WhyChooseUs />
           </section>
 
-          <section id="testimonials">
+          {/* <section id="testimonials">
             <Testimonials />
-          </section>
+          </section> */}
 
           <section id="contact">
             <CTA />
