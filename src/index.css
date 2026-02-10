@@ -4,12 +4,15 @@
 
 
 .pre_text {
-      font-family: "Monoton";
+  font-family: "Monoton";
   font-weight: 550;
   font-style: normal;
 }
 
 
-body {
-  @apply bg-white text-black font-serif;
+.pre_text1 {
+    font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
