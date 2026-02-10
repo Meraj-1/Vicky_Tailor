@@ -21,21 +21,49 @@ export default function App() {
 
   return (
     <>
-      {loading ? <Preloader /> : (
+      {loading ? (
+        <Preloader />
+      ) : (
         <>
           <Navbar />
-          <Hero />
-          <About />
-          <Services />
-          <Collections />
-          <Process />
-          <WhyChooseUs />
-          <Testimonials />
-          <CTA />
-          <Contact />
+
+          <section id="home">
+            <Hero />
+          </section>
+
+          <section id="about">
+            <About />
+          </section>
+
+          <section id="services">
+            <Services />
+          </section>
+
+          <section id="collections">
+            <Collections />
+          </section>
+
+          <section id="process">
+            <Process />
+          </section>
+
+          <section id="whychooseus">
+            <WhyChooseUs />
+          </section>
+
+          <section id="testimonials">
+            <Testimonials />
+          </section>
+
+          <section id="contact">
+            <CTA />
+            <Contact />
+          </section>
+
           <Footer />
         </>
       )}
     </>
   );
 }
+
