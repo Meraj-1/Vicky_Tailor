@@ -3,6 +3,14 @@ import { useEffect, useState } from "react";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
+
+  // Detect scroll for navbar polish
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const menu = [
     { name: "Home", id: "home" },
@@ -18,56 +26,55 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { threshold: 0.55 }
-    );
-
-    menu.forEach((item) => {
-      const section = document.getElementById(item.id);
-      if (section) observer.observe(section);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <nav className="fixed top-4 md:top-6 w-full z-50 flex justify-center">
-      <div className="w-[92%] max-w-7xl rounded-full bg-white/80 backdrop-blur-xl border border-white/40 shadow-lg">
-        <div className="px-5 py-3 md:px-8 md:py-4 flex items-center justify-between">
+    <nav className="fixed top-0 md:top-4 w-full z-[100] flex justify-center">
+      {/* GLASS CONTAINER */}
+      <div
+        className={`
+          w-full md:w-[92%] max-w-7xl transition-all duration-500
+          ${scrolled ? "md:rounded-full" : "md:rounded-2xl"}
+
+          bg-white/10 backdrop-blur-[10px]
+          border border-white/15
+          shadow-[0_10px_30px_rgba(0,0,0,0.25)]
+        `}
+      >
+        <div className="px-6 py-4 md:px-10 flex items-center justify-between">
 
           {/* LOGO */}
           <div
             onClick={() => handleScroll("home")}
-            className="cursor-pointer flex flex-col leading-none"
+            className="cursor-pointer leading-none"
           >
-            <h1 className="text-lg md:text-2xl font-bold pre_text text-[#5A0E24]">
-              Vicky Tailor
+            <h1 className="text-xl md:text-2xl pre_text font-semibold tracking-tight text-white">
+              VICKY <span className="font-light italic text-white/90">TAILOR</span>
             </h1>
-            <span className="mt-1 text-[9px] md:text-[11px] tracking-[0.25em] uppercase pre_text1 text-[#5A0E24]/80">
+            <span className="block mt-1 text-[9px] pre_text1 md:text-[10px] tracking-[0.4em] uppercase text-white/60">
               Since 1983
             </span>
           </div>
 
           {/* DESKTOP MENU */}
-          <ul className="hidden md:flex gap-8 lg:gap-12 text-xs tracking-[0.25em] uppercase">
+          <ul className="hidden md:flex gap-12 text-[11px] tracking-[0.3em] uppercase">
             {menu.map((item) => (
               <li
                 key={item.id}
                 onClick={() => handleScroll(item.id)}
-                className="relative cursor-pointer text-[#5A0E24]"
+                className={`relative cursor-pointer transition-colors duration-300
+                  ${
+                    active === item.id
+                      ? "text-[#D4AF37]"
+                      : "text-white/80 hover:text-white"
+                  }
+                `}
               >
                 {item.name}
-                <span
-                  className={`absolute left-1/2 -bottom-2 h-[2px] bg-[#D4AF37]
-                  transition-all duration-300 -translate-x-1/2
-                  ${active === item.id ? "w-7 opacity-100" : "w-0 opacity-0"}`}
-                />
+
+                {/* Active dot */}
+                {active === item.id && (
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5
+                    bg-[#D4AF37] rounded-full shadow-[0_0_8px_#D4AF37]" />
+                )}
               </li>
             ))}
           </ul>
@@ -75,63 +82,53 @@ export default function Navbar() {
           {/* CTA */}
           <button
             onClick={() => handleScroll("contact")}
-            className="hidden md:block px-6 py-2 rounded-full border border-[#5A0E24]
-            text-[#5A0E24] text-xs tracking-widest uppercase
-            hover:bg-[#5A0E24] hover:text-white transition"
+            className="hidden md:block px-7 py-2.5 rounded-full
+            bg-white/10 border border-white/20
+            text-white text-[10px] tracking-widest uppercase
+            hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37]
+            transition-all duration-300 active:scale-95"
           >
             Book Appointment
           </button>
 
           {/* MOBILE TOGGLE */}
           <button
-            className="md:hidden text-2xl text-[#5A0E24]"
+            className="md:hidden text-white text-2xl"
             onClick={() => setOpen(!open)}
           >
-            ☰
+            {open ? "✕" : "☰"}
           </button>
         </div>
       </div>
 
       {/* MOBILE MENU */}
       <div
-        className={`md:hidden fixed inset-0 bg-[#fffdfb] transition-transform duration-500 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`md:hidden fixed inset-0 bg-black/80 backdrop-blur-md transition-all duration-500
+          ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+        `}
       >
-        <div className="flex flex-col h-full px-8 py-10">
-
-          {/* MOBILE LOGO */}
-          <div className="mb-14 text-center">
-            <h1 className="text-2xl font-bold pre_text text-[#5A0E24]">
-              Vicky Tailor
-            </h1>
-            <p className="mt-1 text-[10px] tracking-[0.3em] uppercase pre_text1 text-[#5A0E24]/70">
-              Since 1983
-            </p>
-          </div>
-
-          <ul className="flex flex-col gap-8 text-sm tracking-[0.3em] uppercase text-center">
-            {menu.map((item) => (
-              <li
-                key={item.id}
-                onClick={() => handleScroll(item.id)}
-                className={`transition ${
+        <div className="flex flex-col items-center justify-center h-full gap-10">
+          {menu.map((item, index) => (
+            <div
+              key={item.id}
+              onClick={() => handleScroll(item.id)}
+              style={{ transitionDelay: `${index * 60}ms` }}
+              className={`text-2xl tracking-[0.25em] uppercase transition-all duration-500
+                ${
+                  open
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }
+                ${
                   active === item.id
-                    ? "text-[#D4AF37]"
-                    : "text-[#5A0E24]"
-                }`}
-              >
-                {item.name}
-              </li>
-            ))}
-          </ul>
-
-          <button
-            onClick={() => handleScroll("contact")}
-            className="mt-auto bg-[#5A0E24] text-white py-4 rounded-full tracking-widest uppercase"
-          >
-            Book Appointment
-          </button>
+                    ? "text-[#D4AF37] italic"
+                    : "text-white"
+                }
+              `}
+            >
+              {item.name}
+            </div>
+          ))}
         </div>
       </div>
     </nav>
