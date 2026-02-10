@@ -39,7 +39,7 @@ export default function Preloader() {
           transition={{ duration: 1.1, ease: "easeOut" }}
         /> */}
 {/* HANGING LOGO WRAPPER */}
-<motion.div
+{/* <motion.div
   className="relative mb-8"
   style={{ transformOrigin: "50% 0%" }}
   initial={{ rotate: -40 }}
@@ -48,36 +48,51 @@ export default function Preloader() {
     duration: 3,
     ease: "easeOut",
   }}
+> */}
+<motion.div
+  className="relative mb-10"
+  style={{ transformOrigin: "50% 0%" }}
+  initial={{ rotate: -35 }}
+  animate={{ rotate: [-35, 35, -25, 25, -15, 15, -8, 8, 0] }}
+  transition={{
+    duration: 3.5,
+    ease: "easeOut",
+  }}
 >
 
   {/* THREAD / STRING */}
-  {/* <div
-    className="
-      absolute
-      left-1/2 -translate-x-1/2
-      -top-10
-      h-10
-      w-[2px]
-      bg-[#5A0E24]/60
-    "
-  /> */}
+{/* STRING */}
+{/* <div
+  className="
+    absolute
+    left-1/2 -translate-x-1/2
+    -top-14
+    h-16
+    w-[2px]
+    bg-gradient-to-b
+    from-[#5A0E24]
+    to-[#5A0E24]/30
+    shadow-sm
+  " */}
+{/* /> */}
 
   {/* LOGO IMAGE */}
   <motion.img
-    src="/icon.png"
-    alt="Vicky Tailor Logo"
-    className="
-      w-24 h-24
-      sm:w-32 sm:h-32
-      md:w-36 md:h-36
-      lg:w-44 lg:h-44
-      xl:w-52 xl:h-52
-      drop-shadow-[0_20px_25px_rgba(0,0,0,0.15)]
-    "
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 1, ease: "easeOut" }}
-  />
+  src="/icon.png"
+  alt="Vicky Tailor Logo"
+  className="
+    mt-1
+    w-40 h-40
+    md:w-36 md:h-36
+    lg:w-44 lg:h-44
+    xl:w-52 xl:h-52
+    drop-shadow-[0_25px_30px_rgba(0,0,0,0.2)]
+  "
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 1, ease: "easeOut" }}
+/>
+
 </motion.div>
 
 
@@ -93,13 +108,14 @@ export default function Preloader() {
               relative z-10
               font-bold pre_text tracking-tight
               text-[#5A0E24]
-              text-4xl
-              sm:text-5xl
-              md:text-6xl
+              text-5xl
+
+              md:text-8xl
               lg:text-7xl
               xl:text-8xl
             "
           >
+
             {BRAND_NAME}
           </motion.h1>
 
@@ -124,8 +140,8 @@ export default function Preloader() {
     mt-3
     tracking-[0.4em]
     text-[#5A0E24]
-    text-xs
-    font-semibold
+    text-md
+    font-bold
     sm:text-sm pre_text1
     md:text-base
   "
