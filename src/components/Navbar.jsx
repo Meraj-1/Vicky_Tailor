@@ -88,7 +88,7 @@ export default function SartorialNavbar() {
 
         {/* 2. MAIN NAV CONTAINER - Fixed height logic */}
         <div className={`w-full max-w-[94%] md:max-w-7xl transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-auto
-  ${scrolled ? "mt-1 md:mt-2" : "mt-2 md:mt-6"}`}>
+  ${scrolled ? "mt-1 md:mt-2" : "mt-2 md:mt-2"}`}>
   
   <motion.div
     layout
