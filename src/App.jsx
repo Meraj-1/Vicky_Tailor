@@ -11,6 +11,7 @@ import Testimonials from "./components/Testimonials";
 import CTA from "./components/CTA";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Social from "./components/Social"
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,9 @@ export default function App() {
           <section id="whychooseus">
             <WhyChooseUs />
           </section>
-
+<section id="social">
+            <Social />
+          </section>
           {/* <section id="testimonials">
             <Testimonials />
           </section> */}
