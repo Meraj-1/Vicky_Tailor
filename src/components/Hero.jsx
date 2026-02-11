@@ -3,8 +3,8 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState } from "react";
 
-// --- MINIMALIST PERSPECTIVE COMPONENT ---
-const AestheticImage = ({ src, className, delay = 0 }) => {
+// --- MINIMALIST PERSPECTIVE VIDEO COMPONENT ---
+const AestheticVideo = ({ src, className, delay = 0 }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -12,7 +12,7 @@ const AestheticImage = ({ src, className, delay = 0 }) => {
   const mouseY = useSpring(y, { stiffness: 100, damping: 20 });
 
   const rotateX = useTransform(mouseY, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-8deg", "8deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-12deg", "12deg"]);
 
   return (
     <motion.div
@@ -30,8 +30,12 @@ const AestheticImage = ({ src, className, delay = 0 }) => {
       className={className}
     >
       <div className="relative w-full h-full overflow-hidden shadow-[20px_40px_80px_rgba(0,0,0,0.06)] border border-white/50">
-        <motion.img
+        <motion.video
           src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
           className="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-[2s]"
         />
         {/* Soft Sunlight Overlay */}
@@ -41,7 +45,7 @@ const AestheticImage = ({ src, className, delay = 0 }) => {
   );
 };
 
-export default function AestheticLightHero() {
+export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -49,13 +53,10 @@ export default function AestheticLightHero() {
       
       {/* 1. ARCHITECTURAL LAYOUT ELEMENTS */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Soft Stone Shape */}
         <div className="absolute top-0 right-0 w-[45vw] h-full bg-[#F0EEE6]" />
         
-        {/* Subtle Grid Texture */}
         <div className="absolute inset-0 opacity-[0.4] bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] mix-blend-multiply" />
         
-        {/* Large Faded Signature */}
         <div className="absolute top-1/2 left-10 -translate-y-1/2 -rotate-90 origin-left">
            <span className="text-[12rem] font-serif italic text-black/[0.02] whitespace-nowrap">
              Handmade Legacy
@@ -65,14 +66,13 @@ export default function AestheticLightHero() {
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-8 grid lg:grid-cols-12 gap-4 min-h-screen items-center py-20">
         
-        {/* LEFT – CONTENT (6 Columns) */}
+        {/* LEFT – CONTENT */}
         <div className="lg:col-span-6 lg:pr-16 order-2 lg:order-1">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            {/* Elegant Sub-header */}
             <div className="flex items-center gap-4 mb-8">
               <span className="text-[10px] tracking-[0.6em] uppercase text-[#D4AF37] font-bold">
                 The New Standard
@@ -80,7 +80,6 @@ export default function AestheticLightHero() {
               <div className="h-[1px] w-16 bg-[#D4AF37]/30" />
             </div>
 
-            {/* Refined Headline */}
             <h1 className="text-7xl md:text-[8.5rem] font-serif leading-[0.9] tracking-tight mb-12 text-[#1A1A1A]">
               Timeless <br />
               <span className="italic font-light text-[#A89276]">Elegance</span>
@@ -91,7 +90,6 @@ export default function AestheticLightHero() {
                 We believe in the beauty of the <span className="text-black italic">unspoken</span>. No loud logos, just perfect cuts and the world's finest natural fibers.
               </p>
 
-              {/* MINIMALIST BUTTON */}
               <div className="flex items-center gap-12">
                 <motion.button
                   onMouseEnter={() => setIsHovered(true)}
@@ -117,31 +115,29 @@ export default function AestheticLightHero() {
           </motion.div>
         </div>
 
-        {/* RIGHT – VISUAL COMPOSITION (6 Columns) */}
+        {/* RIGHT – VIDEO COMPOSITION */}
         <div className="lg:col-span-6 relative h-[75vh] flex items-center justify-end order-1 lg:order-2">
-           {/* Primary Minimal Image */}
-           <AestheticImage 
-             src="/photo/hero1.jpg" 
+           {/* Primary Reel */}
+           <AestheticVideo 
+             src="/reels/reel5.mp4" 
              className="z-20 w-[75%] h-[85%] rounded-[4px]"
              delay={0.2}
            />
 
-           {/* Detail Inset */}
-           <AestheticImage 
-             src="/photo/hero2.jpg" 
+           {/* Detail Reel Inset */}
+           <AestheticVideo 
+             src="/reels/reel4.mp4" 
              className="absolute -left-10 bottom-[10%] z-30 w-[45%] h-[40%] border-[15px] border-[#F9F7F2]"
              delay={0.5}
            />
            
-           {/* Floating Badge */}
            <div className="absolute top-[10%] -left-5 z-40 bg-white p-4 shadow-sm border border-black/5 rotate-3">
               <p className="text-[9px] font-black tracking-widest uppercase">100% Cashmere</p>
            </div>
         </div>
       </div>
 
-      {/* MINIMAL FOOTER OVERLAY */}
-      <div className="absolute bottom-10 left-10 flex gap-20 opacity-40 grayscale pointer-events-none">
+      <div className="absolute bottom-10 left-10 flex gap-20 opacity-40 grayscale pointer-events-none text-[#2D2D2D]">
          <span className="text-[10px] tracking-widest uppercase">Milan</span>
          <span className="text-[10px] tracking-widest uppercase">Paris</span>
          <span className="text-[10px] tracking-widest uppercase">London</span>
