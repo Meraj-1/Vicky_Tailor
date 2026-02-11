@@ -3,12 +3,12 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import { ArrowRight, ArrowLeft, Instagram, ArrowUpRight } from "lucide-react";
 
 const posts = [
-  { src: "/reels/reel4.mp4", instaLink: "https://www.instagram.com/reel/DOtRKebDN0f/", duration: 5 },
-  { src: "/reels/reel8.mp4", instaLink: "https://www.instagram.com/reel/DMhP7TnI2UK/", duration: 5 },
-  { src: "/reels/reel3.mp4", instaLink: "https://www.instagram.com/reel/DUGUmckDBzq/", duration: 28 },
+  { src: "/reels/reel4.mp4", instaLink: "https://www.instagram.com/reel/DOtRKebDN0f/", duration: 10 },
+  { src: "/reels/reel8.mp4", instaLink: "https://www.instagram.com/reel/DMhP7TnI2UK/", duration: 10 },
+  { src: "/reels/reel3.mp4", instaLink: "https://www.instagram.com/reel/DUGUmckDBzq/", duration: 10 },
   { src: "/reels/reel7.mp4", instaLink: "https://www.instagram.com/reel/DPMJP0OjATo/", duration: 10 },
-  { src: "/reels/reel5.mp4", instaLink: "https://www.instagram.com/reel/DRhdk-LjMQs/", duration: 24 },
-  { src: "/reels/reel6.mp4", instaLink: "https://www.instagram.com/reel/DNNA6KdPWwl/", duration: 24 },
+  { src: "/reels/reel5.mp4", instaLink: "https://www.instagram.com/reel/DRhdk-LjMQs/", duration: 10},
+  { src: "/reels/reel6.mp4", instaLink: "https://www.instagram.com/reel/DNNA6KdPWwl/", duration: 10 },
 ];
 
 const Social = () => {
