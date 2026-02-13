@@ -119,14 +119,14 @@ export default function Hero() {
         <div className="lg:col-span-6 relative h-[75vh] flex items-center justify-end order-1 lg:order-2">
            {/* Primary Reel */}
            <AestheticVideo 
-             src="/reels/reel3.mp4" 
+             src="/reels/reel3.webm" 
              className="z-20 w-[75%] h-[85%] rounded-[4px]"
              delay={0.2}
            />
 
            {/* Detail Reel Inset */}
            <AestheticVideo 
-             src="/reels/reel5.mp4" 
+             src="/reels/reel8.webm" 
              className="absolute -left-10 bottom-[10%] z-30 w-[45%] h-[40%] border-[15px] border-[#F9F7F2]"
              delay={0.5}
            />
